@@ -28,15 +28,14 @@ var commentsByExt = map[string]string{
 	".go":   "//",
 	".yaml": "#",
 	".yml":  "#",
-	".rs":   "//",
 	// When adding additional file extensions, update also the NewMarkerFor documentation and error
 }
 
 // Marker represents a machine-readable comment that will be used for scaffolding purposes
 type Marker struct {
-	prefix  string
-	comment string
-	value   string
+	Prefix  string
+	Comment string
+	Value   string
 }
 
 // NewMarkerFor creates a new marker customized for the specific file. The created marker
@@ -52,9 +51,9 @@ func NewMarkerWithPrefixFor(prefix string, path string, value string) Marker {
 	ext := filepath.Ext(path)
 	if comment, found := commentsByExt[ext]; found {
 		return Marker{
-			prefix:  markerPrefix(prefix),
-			comment: comment,
-			value:   value,
+			Prefix:  markerPrefix(prefix),
+			Comment: comment,
+			Value:   value,
 		}
 	}
 
@@ -67,13 +66,13 @@ func NewMarkerWithPrefixFor(prefix string, path string, value string) Marker {
 
 // String implements Stringer
 func (m Marker) String() string {
-	return m.comment + " " + m.prefix + m.value
+	return m.Comment + " " + m.Prefix + m.Value
 }
 
 // EqualsLine compares a marker with a string representation to check if they are the same marker
 func (m Marker) EqualsLine(line string) bool {
-	line = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(line), m.comment))
-	return line == m.prefix+m.value
+	line = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(line), m.Comment))
+	return line == m.Prefix+m.Value
 }
 
 // CodeFragments represents a set of code fragments

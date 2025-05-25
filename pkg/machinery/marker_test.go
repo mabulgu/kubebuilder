@@ -23,7 +23,7 @@ import (
 
 var _ = Describe("NerMarkerFor", func() {
 	DescribeTable("should create valid markers for known extensions",
-		func(path, comment string) { Expect(NewMarkerFor(path, "").comment).To(Equal(comment)) },
+		func(path, comment string) { Expect(NewMarkerFor(path, "").Comment).To(Equal(comment)) },
 		Entry("for go files", "file.go", "//"),
 		Entry("for yaml files", "file.yaml", "#"),
 		Entry("for yaml files (short version)", "file.yml", "#"),
@@ -39,8 +39,8 @@ var _ = Describe("Marker", func() {
 	Context("String", func() {
 		DescribeTable("should return the right string representation",
 			func(marker Marker, str string) { Expect(marker.String()).To(Equal(str)) },
-			Entry("for go files", Marker{prefix: kbPrefix, comment: "//", value: "test"}, "// +kubebuilder:scaffold:test"),
-			Entry("for yaml files", Marker{prefix: kbPrefix, comment: "#", value: "test"}, "# +kubebuilder:scaffold:test"),
+			Entry("for go files", Marker{Prefix: kbPrefix, Comment: "//", Value: "test"}, "// +kubebuilder:scaffold:test"),
+			Entry("for yaml files", Marker{Prefix: kbPrefix, Comment: "#", Value: "test"}, "# +kubebuilder:scaffold:test"),
 		)
 	})
 })
