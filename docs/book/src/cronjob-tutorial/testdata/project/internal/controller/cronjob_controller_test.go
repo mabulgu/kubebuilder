@@ -29,8 +29,8 @@ import (
 	"reflect"
 	"time"
 
-    . "github.com/onsi/ginkgo/v2"
-    . "github.com/onsi/gomega"
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
 	batchv1 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -172,10 +172,10 @@ var _ = Describe("CronJob controller", func() {
 			controllerRef := metav1.NewControllerRef(createdCronjob, gvk)
 			testJob.SetOwnerReferences([]metav1.OwnerReference{*controllerRef})
 			Expect(k8sClient.Create(ctx, testJob)).Should(Succeed())
-			// Note that you can not manage the status values while creating the resource. 
-			// The status field is managed separately to reflect the current state of the resource. 
+			// Note that you can not manage the status values while creating the resource.
+			// The status field is managed separately to reflect the current state of the resource.
 			// Therefore, it should be updated using a PATCH or PUT operation after the resource has been created.
-			// Additionally, it is recommended to use StatusConditions to manage the status. For further information see: 
+			// Additionally, it is recommended to use StatusConditions to manage the status. For further information see:
 			// https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			testJob.Status.Active = 2
 			Expect(k8sClient.Status().Update(ctx, testJob)).Should(Succeed())
